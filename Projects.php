@@ -131,8 +131,8 @@ class Projects {
 
                             $keyValue = 'http://' . $_SERVER['HTTP_HOST'] . str_replace("..", "", "$keyValue");
 
-                            $sectionArray[$resultArray['Slug']]['Image'][$key]['ImageUrl'] = $keyValue;
-                            $sectionArray[$resultArray['Slug']]['Image'][$key][$resultArray[4]] = $imageData;
+                            $sectionArray[$resultArray['Slug']]['Image'][$key]['ImageUrl'] = $this->parseText($keyValue);
+                            $sectionArray[$resultArray['Slug']]['Image'][$key][$resultArray[4]] = $this->parseText($imageData);
                         }
                     }
                     break;
@@ -140,13 +140,13 @@ class Projects {
                     $data = file_get_contents($resultArray[5]);
                     $imageEncoding = 'data:image/jpeg;base64,' . base64_encode($data);
 
-                    $sectionArray[$resultArray['Slug']][$resultArray[4]] = $imageEncoding;
+                    $sectionArray[$resultArray['Slug']][$resultArray[4]] = $this->parseText($imageEncoding);
                     break;
                 default:
                     if (empty($resultArray[5])) $keyValue = 0;
                     else $keyValue = $resultArray[5];
 
-                    $sectionArray[$resultArray['Slug']][$resultArray[4]] = $keyValue;
+                    $sectionArray[$resultArray['Slug']][$resultArray[4]] = $this->parseText($keyValue);
                     break;
             }
         }
@@ -265,7 +265,7 @@ class Projects {
 
     private function parseText($textString = '') {
         $textString = preg_replace('/\r|\n|\t/m','', $textString);
-        $textString = htmlentities($textString);
+        $textString = htmlspecialchars($textString);
 
         return $textString;
     }
@@ -328,7 +328,7 @@ class Projects {
     }
 }
 
-$projectEncoder = new Projects();
+$projectEncoder = new Project();
 
 if ( isset($_GET['update']) ) $projectEncoder->getJson(true);
     else $projectEncoder->getJson();
