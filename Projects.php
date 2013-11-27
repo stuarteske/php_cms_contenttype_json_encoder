@@ -16,7 +16,7 @@ require_once '../classes/Images/ImageManager.php';
  * after the category type with the database. The
  * system is case sensitive!
  * 
- * @version 1.00.02
+ * @version 1.00.03
  *
  * @copyright    Copyright (C) 2013 CFA Group. All rights reserved.
  * @license      GNU General Public License Version 2 or later.
@@ -261,6 +261,8 @@ class CategoryTypeNameHere {
                 'total' => count($this->getSectionArray()),
                 'results' => $this->getSectionArray()
             );
+            
+            $outputArray['size'] = strlen(json_encode($outputArray));
         }
 
         echo json_encode($outputArray);
