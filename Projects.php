@@ -16,7 +16,7 @@ require_once '../classes/Images/ImageManager.php';
  * after the category type with the database. The
  * system is case sensitive!
  * 
- * @version 1.00.00
+ * @version 1.00.02
  *
  * @copyright    Copyright (C) 2013 CFA Group. All rights reserved.
  * @license      GNU General Public License Version 2 or later.
@@ -59,6 +59,9 @@ class CategoryTypeNameHere {
 
         // Setup the image manager
         $this->setImageManager( new Images_ImageManager() );
+
+        // Get the url protocol
+        $this->setProtocal(stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://');
     }
 
     /**
@@ -135,7 +138,7 @@ class CategoryTypeNameHere {
                             $imageFile = file_get_contents($keyValue);
                             $imageData = 'data:image/png;base64,' . base64_encode($imageFile);
 
-                            $keyValue = 'http://' . $_SERVER['HTTP_HOST'] . str_replace("..", "", "$keyValue");
+                            $keyValue = $this->getProtocal() . $_SERVER['HTTP_HOST'] . str_replace("..", "", "$keyValue");
 
                             $sectionArray[$resultArray['Slug']]['Image'][$key]['ImageUrl'] = $this->parseText($keyValue);
                             $sectionArray[$resultArray['Slug']]['Image'][$key][$resultArray[4]] = $this->parseText($imageData);
@@ -316,6 +319,14 @@ class CategoryTypeNameHere {
     public function getProtocal()
     {
         return $this->protocal;
+    }
+
+    /**
+     * @param string $protocal
+     */
+    public function setProtocal($protocal)
+    {
+        $this->protocal = $protocal;
     }
 
     /**
