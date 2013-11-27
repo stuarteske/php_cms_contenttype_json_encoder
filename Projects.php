@@ -10,13 +10,19 @@ require_once '../classes/Images/ImageManager.php';
  * Date: 12/11/13
  * Time: 15:36
  *
- * @description a
+ * @description This class will extract all entities 
+ * of a specific category type, from the php_cms
+ * database. the name of the file should be named
+ * after the category type with the database. The
+ * system is case sensitive!
+ * 
+ * @version 1.00.00
  *
  * @copyright    Copyright (C) 2013 CFA Group. All rights reserved.
  * @license      GNU General Public License Version 2 or later.
  * @author       Stuart Eske, <stuart.eske@cfa-group.com>
  */
-class Projects {
+class CategoryTypeNameHere {
 
     /**
      * @var string
@@ -249,7 +255,8 @@ class Projects {
         } else {
             $outputArray = array(
                 'version' => hash('sha512', $outputString),
-                'result' => $this->getSectionArray()
+                'total' => count($this->getSectionArray()),
+                'results' => $this->getSectionArray()
             );
         }
 
@@ -328,8 +335,7 @@ class Projects {
     }
 }
 
-$projectEncoder = new Project();
+$categoryTypeEncoder = new CategoryTypeNameHere();
 
-if ( isset($_GET['update']) ) $projectEncoder->getJson(true);
-    else $projectEncoder->getJson();
-
+if ( isset($_GET['update']) ) $categoryTypeEncoder->getJson(true);
+else $categoryTypeEncoder->getJson();
